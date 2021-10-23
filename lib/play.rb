@@ -8,7 +8,6 @@ class Hangman
         @word = facts.sample
         @live = 5
         @correct_guess = []
-        @letters = ('a'..'z').to_a
         @word_teaser = ""
         word.last.size.times do
                 @word_teaser += "_ "
@@ -57,25 +56,31 @@ class Hangman
 
     def valid_move(guess = nil)
         puts
+         
         puts "Enter a letter"
+        win = false
         guess = gets.chomp.downcase
+       
             if word.last.include?(guess)
                 puts "Correct guess!"
                 print_teaser(guess)
-                p correct_guess << guess
-                 @letters.delete(guess)
+                if @word_teaser.split.join == word.last.split.join
+                    return  puts "#{player.upcase} wins!!! You are indeed a GENIUS!!!"
+                end
                   valid_move
-            elsif guess == "exit" || "quit"
-                puts "Good Bye #{player},, I hope to see you soon!!!"
+            elsif guess == "exit"|| guess == "quit" 
+                puts "Good Bye #{player}, I hope to see you soon!!!"
             elsif  @live > 0 && !word.last.include?(guess)
                 @live -= 1
                 puts 'Wrong guess'
-                puts "#{player}, you have #{live} attempts left, Try again"
+                puts "#{player.upcase}, you have #{live} attempts left, Try again"
                 description
                 valid_move
             elsif @live == 0
-                puts "You lose, better luck next time"
+                puts "#{player.upcase} loses, better luck next time"
+           
             end
+       
     end
     
 
