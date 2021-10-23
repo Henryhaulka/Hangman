@@ -1,5 +1,5 @@
 class Player
-    def initialize(name = nil)
-        @name = name
-    end
+  def initialize(name = nil)
+    @name = name
+  end
 end
