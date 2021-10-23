@@ -12,6 +12,6 @@ class Checks
            return @player if gamer
            puts 'name should be at least 3 letters' if !gamer
         end
-   
    end
+   
 end

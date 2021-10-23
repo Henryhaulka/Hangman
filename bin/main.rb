@@ -1,2 +1,2 @@
 require_relative '../lib/play'
- start = Hangman.new.show
+ start = Hangman.new.begin
