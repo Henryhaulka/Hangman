@@ -1,5 +1,6 @@
 require_relative 'checks'
 require_relative 'player'
+# rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 class Hangman
   attr_reader :player_on, :player, :word, :live, :correct_guess
 
@@ -53,19 +54,35 @@ class Hangman
     valid_move
   end
 
+  # rubocop:disable Metrics/MethodLength
   def valid_move(_last_guess = nil)
-    puts
+    if @word_teaser.delete(' ') == word.last.delete(' ')
+      return puts "#{player.upcase} wins!!! You are indeed a GENIUS!!!"
+    end
 
+    puts
     puts 'Enter a letter'
+
     guess = gets.chomp
+
     if word.last.include?(guess)
-      puts 'Correct guess!'
-      print_teaser(guess)
-      if @word_teaser.split.join == word.last.split.join
-        return puts "#{player.upcase} wins!!! You are indeed a GENIUS!!!"
+
+      if correct_guess.include?(guess)
+        puts
+        description
+        puts
+        puts "You have pick this letter #{guess.upcase}, pick a letter you haven't picked"
+        puts
       end
+      puts
+      correct_guess << guess
+      puts
+      puts 'Correct guess!'
+      puts
+      print_teaser(guess)
 
       valid_move
+
     elsif %w[exit quit].include?(guess)
       puts "Good Bye #{player}, I hope to see you soon!!!"
     elsif @live.positive? && !word.last.include?(guess)
@@ -80,6 +97,7 @@ class Hangman
     end
   end
 
+  # rubocop:enable Metrics/MethodLength
   def welcome
     puts 'Welcome to Hangman, where Football lovers can guess football facts'
     puts "You will be given a clue of the legend's achievement or characteristics"
@@ -92,3 +110,4 @@ class Hangman
     puts
   end
 end
+# rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
